@@ -1,101 +1,118 @@
+"use client";
+
+import { z } from "zod";
+import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { CircleArrowRightIcon, SearchIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { Input } from "@/components/ui/input";
+import { Button, buttonVariants } from "@/components/ui/button";
+import Navbar from "@/modules/components/marketing/ui/navbar";
+import { SearchSchema } from "@/lib/validations/search-schema";
+import { TOP_SEARCHES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+export default function Marketing() {
+  const router = useRouter();
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const {
+    handleSubmit,
+    formState: { errors },
+    register,
+  } = useForm<z.infer<typeof SearchSchema>>({
+    resolver: zodResolver(SearchSchema),
+    defaultValues: {
+      query: "",
+    },
+  });
+
+  // function to redirect user to search page:
+  const onSubmit = handleSubmit((query) => {
+    router.push(`/search?keyword=${query}`);
+  });
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-[calc(100svh-1200px)] w-full md:px-4">
+        <div className="relative mx-auto h-auto w-full max-w-[1360px] overflow-hidden bg-white/5 px-8 py-14 backdrop-blur-md md:rounded-card">
+          <div className="mx-auto w-full max-w-[37.5rem] space-y-7 text-center md:mx-0 md:p-14 md:text-start xl:p-20">
+            <Link href="/home" className="text-4xl font-semibold text-white">
+              AniBroth
+            </Link>
+
+            <form onSubmit={onSubmit} className="flex items-center gap-3">
+              <Input
+                type="text"
+                data-error={!!errors.query as boolean}
+                placeholder="Search Anime..."
+                className="h-12 rounded-xl text-base data-[error-true]:bg-red-100 data-[error-true]:text-red-500 data-[error-true]:outline-red-500"
+                {...register("query")}
+              />
+              <Button
+                className="aspect-square !h-12"
+                variant="secondary"
+                type="submit"
+              >
+                <SearchIcon className="!h-6 !w-6 text-black" />
+              </Button>
+            </form>
+
+            <div className="text-start text-sm leading-[1.885]">
+              <span className="font-semibold">Top search:</span>
+              {}
+              {TOP_SEARCHES.map((keyword, idx) => {
+                const isLastIndex = idx === TOP_SEARCHES.length - 1;
+                return (
+                  <Link
+                    key={idx}
+                    href={`/search?keyword=${keyword}`}
+                    className="tracking-wide text-white transition-colors duration-300 hover:text-secondary"
+                  >
+                    {keyword}
+                    {!isLastIndex ? ", " : "."}
+                  </Link>
+                );
+              })}
+            </div>
+            <Link
+              href="/home"
+              className={cn(
+                buttonVariants({
+                  variant: "secondary",
+                  className: "w-full !px-10 !py-7 text-xl font-medium md:w-max",
+                })
+              )}
+            >
+              Watch anime
+              <CircleArrowRightIcon className="ml-4 !h-5 !w-5" />
+            </Link>
+          </div>
+
+          <Image
+            src="https://hianime.to/images/anw-min.webp?v=0.1"
+            alt="Hianime img"
+            width={500}
+            height={500}
+            className="absolute right-0 top-0 -z-10 hidden object-cover opacity-50 w-full h-full [mask-image:linear-gradient(90deg,transparent,#fff,#fff)] md:block lg:max-w-2xl"
+          />
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </div>
+      <footer className="bg-primary-100 px-4 py-10">
+        <div className="mx-auto flex w-full max-w-[1360px] flex-col items-center justify-between gap-4 sm:flex-row">
+          <p>All rights reserved to its developer!</p>
+          <Link
+            href="https://github.com/patrickmvla"
+            target="_blank"
+            className="text-secondary underline underline-offset-2"
+          >
+            Github
+          </Link>
+        </div>
       </footer>
-    </div>
+    </>
   );
 }
