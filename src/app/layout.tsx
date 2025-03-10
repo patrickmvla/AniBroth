@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 import AppProvider from "@/providers/providers";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -33,6 +34,7 @@ export default function RootLayout({
       <body className={`${poppins.className} antialiased`}>
         <AppProvider>
           <main>{children}</main>
+          <Toaster/>
           <Analytics />
         </AppProvider>
       </body>
