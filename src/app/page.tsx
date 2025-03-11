@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Input } from "@/components/ui/input";
 import { Button, buttonVariants } from "@/components/ui/button";
-import Navbar from "@/modules/components/marketing/ui/navbar";
+import Navbar from "@/modules/marketing/ui/navbar";
 import { SearchSchema } from "@/lib/validations/search-schema";
 import { TOP_SEARCHES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -103,14 +103,17 @@ export default function Marketing() {
       </div>
       <footer className="bg-primary-100 px-4 py-10">
         <div className="mx-auto flex w-full max-w-[1360px] flex-col items-center justify-between gap-4 sm:flex-row">
-          <p>All rights reserved to its developer!</p>
-          <Link
-            href="https://github.com/patrickmvla"
-            target="_blank"
-            className="text-secondary underline underline-offset-2"
-          >
-            Github
-          </Link>
+          <div className="flex items-center gap-1">
+            <p>All rights reserved to its developer!</p>
+
+            <Link
+              href="https://github.com/patrickmvla"
+              target="_blank"
+              className="text-secondary underline underline-offset-2"
+            >
+              Github
+            </Link>
+          </div>
         </div>
       </footer>
     </>
