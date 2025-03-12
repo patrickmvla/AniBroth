@@ -2,7 +2,7 @@ export type ApiResponse<T> =
   | { success: false; status: number; message: string }
   | { success: true; data: T };
 
-export type LatestEpisodeAnimes = {
+export type LatestEpisodeAnime = {
   id: string;
   name: string;
   poster: string;
@@ -13,7 +13,7 @@ export type LatestEpisodeAnimes = {
   };
 };
 
-export type SpotlightAnimes = {
+export type SpotlightAnime = {
   id: string;
   name: string;
   jname: string;
@@ -27,7 +27,7 @@ export type SpotlightAnimes = {
   };
 };
 
-export type TopAnimes = {
+export type TopAnime = {
   episodes: {
     sub: number;
     dub: number;
@@ -38,10 +38,10 @@ export type TopAnimes = {
   rank: number;
 };
 
-export type Top10Animes = {
-  today: TopAnimes[];
-  month: TopAnimes[];
-  week: TopAnimes[];
+export type Top10Anime = {
+  today: TopAnime[];
+  month: TopAnime[];
+  week: TopAnime[];
 };
 
 export type Episodes = {
@@ -85,15 +85,15 @@ export type SharedAnimeType = {
 
 export type HomePage = {
   genres: string[];
-  latestEpisodeAnimes: LatestEpisodeAnimes[];
-  spotlightAnimes: SpotlightAnimes[];
-  top10Animes: Top10Animes[];
-  topAiringAnimes: TopAiringAnime[];
-  topUpcomingAnimes: TopUpcomingAnime[];
-  trendingAnimes: TrendingAnime[];
-  mostPopularAnimes: SharedAnimeType[];
-  mostFavoriteAnimes: SharedAnimeType[];
-  latestCompletedAnimes: SharedAnimeType[];
+  latestEpisodeAnime: LatestEpisodeAnime[];
+  spotlightAnime: SpotlightAnime[];
+  top10Anime: Top10Anime[];
+  topAiringAnime: TopAiringAnime[];
+  topUpcomingAnime: TopUpcomingAnime[];
+  trendingAnime: TrendingAnime[];
+  mostPopularAnime: SharedAnimeType[];
+  mostFavoriteAnime: SharedAnimeType[];
+  latestCompletedAnime: SharedAnimeType[];
 };
 
 export type AnimeStats = {
@@ -208,9 +208,9 @@ export type AnimeInfo = {
     info: Info;
     moreInfo: MoreInfo;
   };
-  mostPopularAnimes: PopularAnime[];
-  recommendedAnimes: RecommendedAnime[];
-  relatedAnimes: RelatedAnime[];
+  mostPopularAnime: PopularAnime[];
+  recommendedAnime: RecommendedAnime[];
+  relatedAnime: RelatedAnime[];
   seasons: Season[];
 };
 
@@ -289,7 +289,7 @@ export type AnimeEntry = {
   totalEpisodes: number;
 };
 
-export type ScheduledAnimes = {
+export type ScheduledAnime = {
   id: string;
   time: string;
   name: string;
